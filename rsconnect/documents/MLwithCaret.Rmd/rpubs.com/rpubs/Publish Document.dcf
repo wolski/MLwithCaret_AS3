@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/473000/568b0648a5c045918fb7f462d80620e4
+bundleId: https://api.rpubs.com/api/v1/document/473000/568b0648a5c045918fb7f462d80620e4
+url: http://rpubs.com/witold/473000
+when: 1551715523.78726

@@ -1,11 +1,11 @@
 ---
 title: "Classifying Wines by Data Mining from Physicochemical Properties"
-author: 'Std Nr: 160223367'
+author: 'Witold Wolski'
 date: "2/05/2019"
 output:
+  html_document: default
   pdf_document: 
     toc: no
-  html_document: default
 bibliography: bibliography.bib
 ---
 
@@ -21,6 +21,7 @@ library(tidyverse)
 ```
 
 
+The source code for this vignette is available at (github)[https://github.com/wolski/MLwithCaret_AS3].
 
 # Analysis
 
@@ -31,7 +32,6 @@ We attempt here to build a classifier, using methods of machine learning (ML), w
 In the original publication [@Cortez2009] the white and red wine datasets were modeled separately since, "red and white tastes are quite different." In the original dataset, the quality was an ordinal variable, with ten levels. Therefore, to model, the response regression models were used, and the authors reported the mean absolute deviation as a measure of model performance. For our study, the quality was collapsed into two categories $quality \le 5$ and $quality > 5$ which we renamed here in "poor" and "good." Hence, we represented the quality as a categorical variable (factor) and use binary classification. To asses the performance of the binary classifiers, we will use a measure suitable for binary classification, namely the ROC curves, as well as well as Cohen's Kappa and Sensitivity and Specificity measures. We also do not split the dataset into white and red wines but build on model for both types of wines and use the wine color as an additional explanatory variable.
 
 Most of the analysis is performed using the `caret` package [@JSSv028i05], which provides a unified interface to many ML algorithms. It also facilitates data preprocessing, and model comparison. A further feature of the `caret` package we utilized is that it facilitates tuning of model hyperparameters.
-
 
 ## The Data
 
@@ -92,7 +92,7 @@ The number of hyperparameters for the Machine learning algorithms tested ranges 
 
 After the parameter tuning, using the ten-fold cross-validation, we will be comparing the models using our test dataset ($20%$ of the data). Using the test set, we made predictions from all trained ML models, determined the confusion matrix, and computed various performance measures using the function `confusionMatrix,` which we will use to compare the models.
 
-To compare the models we used measures Cohens Kappa, Sensitivity and Specificity as well as prediction speed. "[Cohen's kappa](https://en.wikipedia.org/wiki/Cohen%27s_kappa) coefficient is a statistic which measures inter-rater agreement for qualitative (categorical) items" (Wikipedia). According to [@Fleiss81] a kappa over 0.75 is excellent, 0.40 to 0.75 is fair or reasonable, while below 0.40 it is poor. Figure \@ref(fig:figureKapp) shows most of the other algorithms are in the range $0.4-0.75$ meaning they are fair or reasonable. Table \@ref(tab:modelSummary) shows the results for predicting from the test dataset for all ML algorithms tested.
+To compare the models we used measures Cohens Kappa, Sensitivity and Specificity as well as prediction speed. "[Cohen's kappa](https://en.wikipedia.org/wiki/Cohen%27s_kappa) coefficient is a statistic which measures inter-rater agreement for qualitative (categorical) items" (Wikipedia). According to [@Fleiss2013] a kappa over 0.75 is excellent, 0.40 to 0.75 is fair or reasonable, while below 0.40 it is poor. Figure \@ref(fig:figureKapp) shows most of the other algorithms are in the range $0.4-0.75$ meaning they are fair or reasonable. Table \@ref(tab:modelSummary) shows the results for predicting from the test dataset for all ML algorithms tested.
 
 
 The neural network algorithms, trained using the `caret` application programming interface (API) have a kappa below $0.4$, in fact, it is close to zero. All of those NN algorithms failed to converge. That might be a problem of the `caret` package. However, our direct implementation of a sequential neural network with dropout using the R `Keras` package (see supplement) resulted in aKappa of 0.37, which still is lower than for all the other algorithms. For some network architectures we observed also lack of convergence. We remove all algorithms with a $Kappa < 0.4$ from further comparisons.
@@ -174,10 +174,10 @@ confusionMatrix(should_I_drink_these_wines(test_sample), as.factor(test_sample_X
 
 Run the following R files from the `R` folder in Sequence:
 
-- `dataSetup.R`
-- `testingAllModelsAndSaving.R` (very long running script)
-- `analysingResults.R`
-- `deployment.R`
+- (dataSetup.R)[https://github.com/wolski/MLwithCaret_AS3/tree/master/R/dataSetup.R]
+- (testingAllModelsAndSaving.R)[https://github.com/wolski/MLwithCaret_AS3/tree/master/R/testingAllModelsAndSaving.R] (very long running script)
+- (analysingResults.R)[https://github.com/wolski/MLwithCaret_AS3/tree/master/R/analysingResults.R]
+- (deployment.R)[https://github.com/wolski/MLwithCaret_AS3/tree/master/R/deployment.R]
 
 The file `modelFunctions.R` contains the `caras` code.
 
